@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta keywords= "Destination, Dream, SOAiR, Fly, Vacation, Wish list, Relax" />
+		<meta discreption= "Creat a list of your dream distinations" />
+		<meta name= "robots" content= "index, follow" />
+		<meta name= "viewport" content= "user-scalable=no, width=device - width" />
+		<meta name= "HandheldFriendly" content= "True" />
+		<title>SOAiR - Dream Trips</title>
+	</head>
+	<body bgcolor="#f6f5ed" link="#5c5c5c" vlink="#5c5c5c"><font color="#5c5c5c">
+		<a name="top">
+		<header>
+			<h1> <font face= "Good Times">Trips List</font></h1>
+		</header>
+		<section>
+			<form action "#" method="post">
+				<fieldset>
+					<legend><font font face= "Good Times">Add a Trip</font></legend>
+					<ul><font face="Adobe Caslon Pro">
+						<li><label for= "dest">Where do you want to go?</lable><br><input type= "text" id= "dest" placeholder="Country, Continent, Planet!" /></li>
+						<li>
+							<label for= "how">How do you want to get there?</label><br>
+							<select id= "how">
+								<optgroup>
+									<option value= "blank">Select</option>
+									<option value= "Plane"> Plane</option>
+									<option value= "Boat"> Boat</option>
+									<option value= "Bus">Bus</option>
+									<option value= "Train">Train</option>
+									<option value= "Spaceship">Spaceship!</option>
+								</optgroup>
+							</select>
+						</il>
+						<li><lable for= "length">How many Weeks? <font color= "gray" size= "2"> (1 to 4 weeks)</font></label><br><input type= "range" id= "length" min="1" max="4" /></li>
+						<li> What do you want to do?
+							<ul>
+								<li><input type= "checkbox" value = "relax" id= "relax" /><label for = "relax" >I just want to relax!</label></li>
+								<li><input type= "checkbox" value = "explore" id = "explore" /><label for= "explore" >Explore </label></li>
+								<li><input type= "checkbox" value = "learn" id= "learn" /><label for = "learn" >Learn</label></li>
+								<li><input type= "checkbox" value = "party" id= "party" /><label for = "party" >Party</label></li>
+							</ul>
+						</li>
+						<li><label for= "n1">Your Name?</label><br><input type="text" id="n1" /></li>
+						<li> Gender?
+						<ul>
+							<li><input type= "radio"  checked value= "Male" id= "male" name= "sex" /><label for="male">Male</label></li>
+							<li><input type= "radio"  value= "Female" id= "female" name= "sex" /><label for="femail">Female</label></li>
+							<li><input type= "radio"  value= "alien" id= "alien" name= "sex" /><label for="alien">Alien</label></li>	
+						</ul>
+						<li><lable for= "age">Age?</label><br><input type= "range" id= "age" min="18" max="100" /></li>
+						<li><label for="info" >Additional Info:</label></br><textarea id="info"></textarea></li>
+					</font></ul>
+				</fieldset>
+				<input type= "submit" value= "Add" />
+				&nbsp;
+				<a href="additem.html#top">Top</a>
+		</section>
+		<footer>
+			<a href="#">Clear Stored Data</a>
+			&nbsp;
+			<a href="#">Display Data</a>
+			
+		</footer>
+	</body>
