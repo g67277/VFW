@@ -36,14 +36,18 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	function getCheckBoxValue(){
 		var checkBoxes = document.forms[0].hit;
+		var checkArray = [];
+		console.log(checkBoxes);
+		//console.log(checkBoxes[1]);
 		for(var i=0; i<checkBoxes.length; i++){
-			console.log(checkBoxes[i].value);
 			if(checkBoxes[i].checked){
 				checkbValue = checkBoxes[i].value;
+				checkArray[i] = checkbValue;
 			}else{
 				checkbValue = "No";	
 			}
 		}
+		return checkArray;
 	}
 	
 	//turn links on and off
@@ -72,17 +76,17 @@ window.addEventListener("DOMContentLoaded", function(){
 		//Gather up all our form field values and store in an object
 		//Object properties containt array with the form label and input value 
 		getSelectedRadio();
-		getCheckBoxValue();
+		cArray = getCheckBoxValue()
 		var item 			= {};
-			item.date 		= ["Date:", $('date').value ];
+			item.date 		= ["Date of Meeting:", $('date').value ];
 			item.nameM 		= ["Name of Meeting:", $('nameM').value];
-			item.poc		= ["Contact:", $('poc').value];
+			item.poc		= ["Contact Number:", $('poc').value];
 			item.roomN 		= ["Room Number:", $('roomN').value];
 			item.meetingT 	= ["Meeting Time:", $('meetingT').value];
-			item.checkb 	= ["Capabilities Needed:", checkbValue];
-			item.bridges 	= ["Bridges:", $('bridges').value];
-			item.code 		= ["Code:", $('code').value];
-			item.length 	= ["Length:", $('length').value];
+			item.checkb 	= ["Capabilities Needed:", cArray];
+			item.bridges 	= ["Using Bridge:", $('bridges').value];
+			item.code 		= ["Call Code:", $('code').value];
+			item.length 	= ["Length of Meeting:", $('length').value +"hr"];
 			item.userR 		= ["User Responded:", userRValue];
 			item.notes		= ["Notes:", $('notes').value];
 		//Save data to local storage.  Use stringify to convert objects to strings
@@ -91,33 +95,49 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	function getData(){
-		toggleControls("on");
-		//Write data from local storage to browser
-		var makeDiv = document.createElement('div');
-		makeDiv.setAttribute("id","items");
-		var makeList = document.createElement('ul');
-		makeDiv.appendChild(makeList);
-		document.body.appendChild(makeDiv);	
-		console.log(localStorage.length);
-		$('items').style.display = "block";
-		for(i=0, j= localStorage.length; i<j;i++){
-			var makeli = document.createElement('li');
-			makeList.appendChild(makeli);
-			var key = localStorage.key(i);
-			console.log(key);
-			var value = localStorage.getItem(key);
-			console.log(value);
-			//Convert String from localStorage value back to an object by using JSON parse
-			var obj = JSON.parse(value);
-			console.log(obj);
-			var makeSubList = document.createElement('ul');
-			makeli.appendChild(makeSubList);
-			for(var n in obj){
-				var makeSubLi= document.createElement('li');
-				makeSubList.appendChild(makeSubLi);
-				var optSubText = obj[n][0]+" "+ obj[n][1];
-				makeSubLi.innerHTML = optSubText;
+		if(localStorage.length === 0){
+			alert("You do not have any Scheduled Meetings!");
+		}else{
+			toggleControls("on");
+			//Write data from local storage to browser
+			var makeDiv = document.createElement('div');
+			makeDiv.setAttribute("id","items");
+			var makeList = document.createElement('ul');
+			makeDiv.appendChild(makeList);
+			document.body.appendChild(makeDiv);	
+			console.log(localStorage.length);
+			$('items').style.display = "block";
+			for(i=0, j= localStorage.length; i<j;i++){
+				var makeli = document.createElement('li');
+				makeList.appendChild(makeli);
+				var key = localStorage.key(i);
+				console.log(key);
+				var value = localStorage.getItem(key);
+				console.log(value);
+				//Convert String from localStorage value back to an object by using JSON parse
+				var obj = JSON.parse(value);
+				console.log(obj);
+				var makeSubList = document.createElement('ul');
+				makeli.appendChild(makeSubList);
+				for(var n in obj){
+					var makeSubLi= document.createElement('li');
+					makeSubList.appendChild(makeSubLi);
+					var optSubText = obj[n][0]+" "+ obj[n][1];
+					makeSubLi.innerHTML = optSubText;
+				}
 			}
+		}
+	}
+	
+	//Clear Data Function
+	function clearLocal(){
+		if(localStorage.length === 0){
+			alert("Nothing to clear!")
+		}else{
+			localStorage.clear();
+			alert("Schedule is cleared");
+			window.location.reload();
+			return false;
 		}
 	}
 	
@@ -125,14 +145,15 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	var bridgeGroup = ["--Select--", "USAMTIC Audio", "USAMTIC Video", "TMS Audio", "TMS Video"],
 		userRValue,
-		checkbValue;
+		checkbValue,
+		cArray = [];
 	popSec();
 	
 	//Set Links and submit click events
 	var displayD = $('displayD');
 	displayD.addEventListener("click", getData);
-	/*var clearD = $('clearD');
-	clearD.addEventListener("click", clearLocal);*/
+	var clearD = $('clearD');
+	clearD.addEventListener("click", clearLocal);
 	var add = $('submit');
 	add.addEventListener("click", storeData);
 	
