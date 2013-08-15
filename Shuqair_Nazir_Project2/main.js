@@ -46,18 +46,26 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	}
 	
-	/*function toggleControls(n){
+	//turn links on and off
+	function toggleControls(n){
 			switch(n){
 				case "on":
-					$('meetingForms').style.display= "none";
+					$('meetingForms').style.display = "none";
+					$('clearD').style.display = "inline";
+					$('displayD').style.display = "none";
+					$('additem').style.display = "inline";
 					break;
 				case "off":
-					
+					$('meetingForms').style.display = "block";
+					$('clearD').style.display = "inline";
+					$('displayD').style.display = "inline";
+					$('submit').style.display = "none";
+					$('items').style.display = "none";
 					break;
 				default:
 					return false;
 			}
-	}*/
+	}
 	
 	function storeData(){
 		var id 				= Math.floor(Math.random() * 100001);
@@ -83,13 +91,15 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	function getData(){
+		toggleControls("on");
 		//Write data from local storage to browser
 		var makeDiv = document.createElement('div');
 		makeDiv.setAttribute("id","items");
 		var makeList = document.createElement('ul');
 		makeDiv.appendChild(makeList);
 		document.body.appendChild(makeDiv);	
-		console.log(localStorage.length)
+		console.log(localStorage.length);
+		$('items').style.display = "block";
 		for(i=0, j= localStorage.length; i<j;i++){
 			var makeli = document.createElement('li');
 			makeList.appendChild(makeli);
