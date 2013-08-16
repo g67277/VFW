@@ -41,7 +41,6 @@ window.addEventListener("DOMContentLoaded", function(){
 	function getCheckBoxValue(){
 		var checkBoxes = document.forms[0].hit;
 		var checkArray = [];
-		console.log(checkBoxes);
 		//console.log(checkBoxes[1]);
 		for(var i=0; i<checkBoxes.length; i++){
 			if(checkBoxes[i].checked){
@@ -109,15 +108,12 @@ window.addEventListener("DOMContentLoaded", function(){
 			var makeList = document.createElement('ul');
 			makeDiv.appendChild(makeList);
 			document.body.appendChild(makeDiv);	
-			console.log(localStorage.length);
 			$('items').style.display = "block";
 			for(i=0, j= localStorage.length; i<j;i++){
 				var makeli = document.createElement('li');
 				makeList.appendChild(makeli);
 				var key = localStorage.key(i);
-				console.log(key);
 				var value = localStorage.getItem(key);
-				console.log(value);
 				//Convert String from localStorage value back to an object by using JSON parse
 				var obj = JSON.parse(value);
 				console.log(obj);
