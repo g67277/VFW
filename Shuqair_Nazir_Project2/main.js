@@ -1,4 +1,8 @@
 // JavaScript Document
+// Nazir Shuqair
+// VFW 1308
+// 15 Aug 2013
+// Project 2
 
 window.addEventListener("DOMContentLoaded", function(){
 	//alert(localStorage.value(0));
