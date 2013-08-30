@@ -39,10 +39,10 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	function getCheckBoxValue(){
-		if($('pp').checked){
-			ppValue = $('pp').value;
+		if($('vip').checked){
+			vipValue = $('vip').value;
 		}else{
-			ppValue = "No";	
+			vipValue = "No";	
 		}
 	}
 
@@ -75,14 +75,21 @@ window.addEventListener("DOMContentLoaded", function(){
 			switch(n){
 				case "on":
 					$('meetingForms').style.display = "none";
-					$('clearD').style.display = "inline";
 					$('displayD').style.display = "none";
 					$('additem').style.display = "inline";
+					$('clearD').style.display = "inline";
 					break;
 				case "off":
 					$('meetingForms').style.display = "block";
-					$('clearD').style.display = "inline";
 					$('displayD').style.display = "inline";
+					$('clearD').style.display = "inline";
+					$('submit').style.display = "inline";
+					$('items').style.display = "none";
+					break;
+				case "edit":
+					$('meetingForms').style.display = "block";
+					$('clearD').style.display = "inline";
+					$('displayD').style.display = "none";
 					$('submit').style.display = "inline";
 					$('items').style.display = "none";
 					break;
@@ -109,7 +116,7 @@ window.addEventListener("DOMContentLoaded", function(){
 			item.poc		= ["Contact Number:", $('poc').value];
 			item.roomN 		= ["Room Number:", $('roomN').value];
 			item.meetingT 	= ["Meeting Time:", $('meetingT').value];
-			item.checkb 	= ["Capabilities Needed:", ppValue];
+			item.checkb 	= ["Is a VIP Present: ", vipValue];
 			item.bridges 	= ["Using Bridge:", $('bridges').value];
 			item.code 		= ["Call Code:", $('code').value];
 			item.length 	= ["Length of Meeting:", $('length').value];
@@ -121,15 +128,17 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	function getData(){
-		toggleControls("on");
 		if(localStorage.length === 0){
 			alert("You do not have any Scheduled Meetings! ***Default Data Loaded***");
 			autoFillData();
+			toggleControls("on");
 		}else{
+			toggleControls("on");
 			//Write data from local storage to browser
 			var makeDiv = document.createElement('div');
 			makeDiv.setAttribute("id","items");
 			var makeList = document.createElement('ul');
+			makeList.className = "dynamicMakeList";
 			makeDiv.appendChild(makeList);
 			document.body.appendChild(makeDiv);	
 			$('items').style.display = "block";
@@ -141,9 +150,15 @@ window.addEventListener("DOMContentLoaded", function(){
 				var value = localStorage.getItem(key);
 				//Convert String from localStorage value back to an object by using JSON parse
 				var obj = JSON.parse(value);
-				console.log(obj);
 				var makeSubList = document.createElement('ul');
+				var breakTag = document.createElement('br');
+				makeList.appendChild(breakTag);
+				makeSubList.className = "dynamicSubList";
 				makeli.appendChild(makeSubList);
+				console.log(obj.checkb[1]);
+				if(obj.checkb[1] == "vip"){
+					getImage(makeSubList);
+				}
 				for(var n in obj){
 					var makeSubLi= document.createElement('li');
 					makeSubList.appendChild(makeSubLi);
@@ -156,8 +171,21 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	}
 	
+	//get the image for the right category
+	function getImage(makeSubList){
+		var imgLi = document.createElement('li');
+		imgLi.className = "dynamicImg";
+		makeSubList.appendChild(imgLi);
+		var newImg = document.createElement('img');
+		var setSrc = newImg.setAttribute("src", "img/vip_3.png");
+		imgLi.appendChild(newImg);
+	}
+	
 	// Creates the edit and delete links
 	function makeItemLinks(key, makeLinks){
+		var breakTag = document.createElement('br');
+		makeLinks.appendChild(breakTag);
+		
 		//Add edit single Item link
 		var editLink = document.createElement('a');	
 		editLink.href = "#";
@@ -165,10 +193,11 @@ window.addEventListener("DOMContentLoaded", function(){
 		var editText = "Edit";
 		editLink.addEventListener("click", editItem);
 		editLink.innerHTML = editText;
+		editLink.className = "dynamicEdit";
 		makeLinks.appendChild(editLink);
 		
-		var breakTag = document.createElement('br');
-		makeLinks.appendChild(breakTag);
+		//breakTag = document.createElement('br');
+		//makeLinks.appendChild(breakTag);
 		
 		var deleteLink = document.createElement('a');	
 		deleteLink.href = "#";
@@ -176,6 +205,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		var deleteText = "Delete";
 		deleteLink.addEventListener("click", deleteItem);
 		deleteLink.innerHTML = deleteText;
+		deleteLink.className = "dynamicDelete";
 		makeLinks.appendChild(deleteLink);
 	}
 	
@@ -183,10 +213,11 @@ window.addEventListener("DOMContentLoaded", function(){
 	function autoFillData(){
 		//The actual JSON Object data required for this to work is coming from json.js file which is loaded form the html page
 		//Store the JSON into local storage
-		for(var q in json){
+		for(var n in json){
 			var id = Math.floor(Math.random() * 100001);
-			localStorage.setItem(id, JSON.stringify(json[q]));
-		}	
+			localStorage.setItem(id, JSON.stringify(json[n]));
+		}
+		getData();	
 	}
 	
 	function editItem(cb){
@@ -195,7 +226,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		var item = JSON.parse(value);
 
 		//show form again
-		toggleControls("off");	
+		toggleControls("edit");	
 		
 		//populate form fields with the current local storage values
 		$('date').value = item.date[1];
@@ -212,8 +243,8 @@ window.addEventListener("DOMContentLoaded", function(){
 				radios[i].setAttribute("checked", "checked");	
 			}
 		}
-		if(item.checkb[1] == "pp"){
-			$('pp').setAttribute("checked", "checked");	
+		if(item.checkb[1] == "vip"){
+			$('vip').setAttribute("checked", "checked");	
 		}
 		$('bridges').value = item.bridges[1];
 		$('code').value = item.code[1];
@@ -314,6 +345,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		}else{
 			//send the key value which came from the editdata function
 			storeData(this.key);
+			window.location.reload();
 		}
   		
 	}
@@ -322,7 +354,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	var bridgeGroup = ["--Select--", "USAMTIC Audio", "USAMTIC Video", "TMS Audio", "TMS Video"],
 		userRValue,
-		ppValue = "No",
+		vipValue = "No",
 		errMsg = $('errors');
 	popSec();
 	
