@@ -1,7 +1,7 @@
 // JavaScript Document
 // Nazir Shuqair
 // VFW 1308
-// 20 Aug 2013
+// 29 Aug 2013
 // Project 4
 
 window.addEventListener("DOMContentLoaded", function(){
@@ -92,6 +92,7 @@ window.addEventListener("DOMContentLoaded", function(){
 					$('displayD').style.display = "none";
 					$('submit').style.display = "inline";
 					$('items').style.display = "none";
+					$('top').style.display = "none";
 					break;
 				default:
 					return false;
@@ -303,11 +304,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		//get Error messages
 		var messageAry = [];
 		//check for group validation
-		if(getDat.value === ""){
-			var datError = "Please enter a Date"
-			getDat.style.border = "1px solid red";
-			messageAry.push(datError);
-		}
 		if(getNameM.value === ""){
 			var nameMError = "Please enter a Meeting Name"
 			getNameM.style.border = "1px solid red";
@@ -349,6 +345,8 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
   		
 	}
+	
+
 	
 	//variabes default
 	

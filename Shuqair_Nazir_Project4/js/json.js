@@ -1,4 +1,8 @@
 // JavaScript Document
+// Nazir Shuqair
+// VFW 1308
+// 29 Aug 2013
+// Project 4
 
 var json = {
 	"conference1": {
